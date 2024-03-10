@@ -1,0 +1,88 @@
+Pentru rezolvarea cerintelor am folosit urmatoarele structuri:
+-graf reprezentate prin liste de adiacenta
+-lista simplu inlantuita (de stringuri)
+-minheap
+
+Fiecare locatie care apare in descrierea grafului am introdus-o intr-o lista de stringuri ordonata crescator lexico-grafic care functioneaza drept dictionar.
+
+CautaElem:
+-Parcurg lista pana la gasirea locatiei, si returnez numarul celulei cautate
+
+CautLocatie:
+-Parcurg lista pana a x-a celula si returnez informatia
+
+CitGraf_(ne)or:
+-citesc informatiile fiecarei muchii
+-codific sursa si destinatia
+-retin adresa primului arc din lista de arce a nodului sursa
+-parcurg lista de arce pana la arcul dupa care se insereaza si retin ADRESA campului ei urm
+-aloc noul arc si ii setez campul urm cu valoarea de la adresa retinuta mai sus
+-actualizez valoarea de la adrsa folosita mai sus pentru pointa catre arcul nou inserat
+-pentru graful neorientat se repeta procesul plecand de nodul destinatie cu arc catre sursa
+-(graf orientat) citesc adancimile asociate fiecarui nod si le retin intr-un vector pe pozitiile date de codificarile locatiilor
+-(graf orientat) citesc greutatea
+
+Prim_comp: 
+Pana se trece prin toate nodurile din componenta comexa se procedeada astfel:
+-pentri fiecare nod vizitat, se analizeaza arcele catre nodurile nevizitate
+-se retine nodul destinatie al arcului care aduce costul cel mai mic
+-se marcheaza ca vizitat nodul ales si se aduna costul gatit la costul total al parcurgerii
+
+Prim:
+Se aplica algoritmul lui Prim pana la vizitarea tuturor nodurilor si
+se retine intr-un vector costul fiecarei componente conexe.
+Numarul de apeluri al algoritmul ne da nr componentelor conexe.
+Se sorteaza crescator vectorul de costuri si se afiseaza.
+
+---- cerinta 2 ----
+
+ParcDFS:
+-Plecand dintr-un nod de start, se marcheaza nodul sursa ca vizitat
+-se trece prin toate arcele acestuia si pentru cele care duc in noduri
+ nevizitate se aplica acelasi predeau
+Algoritmul se incheie la parcurgerea toturor nodurilor adicente cu nodul de start
+
+sePoate:
+-se parcuge graful plecand de la corabie si daca insula ramana nevizitata, se afiseasa primul mesaj
+-se parcuge graful plecand de la insula si daca corabia ramana nevizitata, se afiseasa al doilea mesaj
+-daca nu se indeplineste niciuna din conditiile precizate, putem rezolva cerinta 2
+
+Dijkstra:
+Partea 1:
+-se aloca si intializeaza vectorii pentru scoruri, distante, noduri precedente si noduri vizitate
+-se adauga in coada de prioritati toate nodurile in afara de nodul sursa
+-se calculeaza scorurile si distantele pentru nodurile catre care pleaca arce din sursa
+-se rearanjeaza coada de prioritati
+-pe rand, se extrage cate un nod u din coada
+-pentru arcele care pleaca din nodul u si duc catre noduri nevizitate v se calculeaza ce scor am obtine pentru drumul de la sursa la nodul v daca am trece prin arcul (u,v)  
+-daca scorul calculat e mai mic, actualizam costul pentru nodul v si distana pana la v pentru ca drumul sa treaca prin arcul (u,v)
+-dupa ce am terminat de verificat arcele cere pleaca din u, marcam ca vizitat u, rearanjam coada si revenim la pasul in care se extrage un nod din coada
+
+Partea2:
+-pornind de la nodul cu codificarea pentru corabie, retinem intr-o lista locatia anterioara nodului curent si dupa trecem la nodul anterior 
+-in acelasi timp retinem adancimea minima care apare in nodurile intalnite
+-in lista inseram mereu la inceput, iar prin parcuregere obtinem locatiile in ordine inversa(insula -> ... -> corabie)
+-se calculeaza numarul de drumuri
+-se afiseaza lista, distanta, adancimea minima si numarul de drumuri
+-eliberam memoria utilizata local
+
+Coada de prioritati am implementat-o folosind structura de minheap care foloseste drept conditie de comparare costrurile asociate nodurilor
+
+InsHeap:
+-pornind cu valorea se inserata din pozitia de la finalalul heap-ului
+-interschimbam valoarea fiului si a tatalui si urcam in arbore pana ajungem la locatia potrivita pentru a insera cu succes noua valoare in heap 
+
+ExtHeap:
+-salvam radacina
+-aducem ultimul element in varful heap-ului
+-alegem fiul care are valoarea cea mai mare si nu respecta relatia de minheap
+-interschimbam sursa cu fiul selectat si ne mutam pe nodul fiul selectat
+-continuam pana ajungem cu elementul cu care am plecat pe pozitia potrivita
+
+heapify:
+-pornim, pe rand, din fiecare nod care nu e frunza(de la ultimul catre primul),
+-alegem fiul care are valoarea cea mai mare si nu respecta relatia de minheap
+-interschimbam sursa cu fiul selectat si ne mutam pe nodul fiu selectat, in mod succesiv pana aducem subarborele la forma de minheap
+-in final, dupa aplicarea procesului pentru toti subarborii aminti la inceput, ajungem ca tot arborele sa respecte relatia de minheap
+
+Punctaj local: 120/100
